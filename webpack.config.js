@@ -67,13 +67,25 @@ module.exports = {
 			filename: "index.html",
 			chunks: ["index"],
 		}),
-		new CopyWebpackPlugin([{ from: "static/" }]),
+		new CopyWebpackPlugin({
+			patterns:[
+				{ from: "static/" }
+			]
+		}),
 	],
 	devServer: {
 		historyApiFallback: true,
-		overlay: true,
-		stats: "minimal",
-		contentBase: __dirname + "/public",
+		client: {
+			overlay: true
+		},
+		devMiddleware: {
+			stats: "minimal",
+		},
+		static: {
+			directory: path.resolve(__dirname, "static"),
+			staticOptions: {},
+			publicPath: "/public/"
+		},
 	},
 	devtool: "inline-source-map",
 };
